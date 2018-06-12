@@ -1057,10 +1057,10 @@ def twodarray2DataArray(arr):
     return da
 
 def write_restart_file(u_n,u_p,v_n,v_p,T_n,T_p,Ps_n,Ps_p,omega_n,z_n,theta_n,omegas_n,theta_s,us,vs,day):
-    np.savez('restart_day{}'.format(day),u_n=u_n,u_p=u_p,v_n=v_n,v_p=v_p,T_n=T_n,T_p=T_p,Ps_n=Ps_n,Ps_p=Ps_p,omega_n=omega_n,z_n=z_n,theta_n=theta_n,omegas_n=omegas_n,theta_s=theta_s,us=us,vs=vs)
+    np.savez('output/restart_day{}'.format(day),u_n=u_n,u_p=u_p,v_n=v_n,v_p=v_p,T_n=T_n,T_p=T_p,Ps_n=Ps_n,Ps_p=Ps_p,omega_n=omega_n,z_n=z_n,theta_n=theta_n,omegas_n=omegas_n,theta_s=theta_s,us=us,vs=vs)
 
 def read_restart_file(u_n,u_p,v_n,v_p,T_n,T_p,Ps_n,Ps_p,omega_n,z_n,theta_n,omegas_n,theta_s,us,vs,day):
-    data = np.load('restart_day{}.npz'.format(day))
+    data = np.load('output/restart_day{}.npz'.format(day))
     u_n = data['u_n']
     u_p = data['u_p']
     v_n = data['v_n']
@@ -1329,7 +1329,7 @@ while t<tstop:
         ds['OMEGAS'] = twodarray2DataArray(omegas_h)
         ds['Q'] = threedarray2DataArray(Q_h)
         ds['THETA'] = threedarray2DataArray(theta_h)
-        ds.to_netcdf('history_out_day{}.nc'.format(day),unlimited_dims = ['time'],engine='scipy')
+        ds.to_netcdf('output/history_out_day{}.nc'.format(day),unlimited_dims = ['time'],engine='scipy')
         plotter_help(ds['U'][0,:,:,:].mean(dim='lon'),0,1)
         plt.show()
         plotter_help(ds['T'][0,:,:,:].mean(dim='lon'),0,1)
